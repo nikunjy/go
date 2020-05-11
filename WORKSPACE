@@ -14,6 +14,7 @@ load("@io_bazel_rules_go//go:deps.bzl", "go_rules_dependencies", "go_register_to
 go_rules_dependencies()
 
 go_register_toolchains()
+
 http_archive(
     name = "bazel_gazelle",
     urls = [
@@ -27,3 +28,7 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
 gazelle_dependencies()
 
+load("//:go_third_party.bzl", "go_deps")
+
+# gazelle:repository_macro go_third_party.bzl%go_deps
+go_deps()
