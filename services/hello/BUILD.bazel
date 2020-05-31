@@ -32,4 +32,3 @@ container_image(
     stamp = True,
     visibility = ["//visibility:public"],
 )
-
