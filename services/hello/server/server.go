@@ -1,34 +1,17 @@
 package server
 
 import (
+	"context"
 	"fmt"
-	"net/http"
-	"time"
 
-	"github.com/gorilla/mux"
+	pb "github.com/nikunjy/go/protos/hello"
 )
 
-type helloServer struct {
-	portNum int
+type Server struct {
 }
 
-func New(portNum int) *helloServer {
-	return &helloServer{
-		portNum: portNum, 
-	}
-}
-
-func (h *helloServer) sayHello(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello!!")
-}
-
-func (h *helloServer) HttpServer() *http.Server {
-	router := mux.NewRouter().StrictSlash(true)
-	router.HandleFunc("/hello", h.sayHello).Methods("GET")
-	return &http.Server{
-		Handler:      router,
-		Addr:         fmt.Sprintf(":%d", h.portNum),
-		ReadTimeout:  10 * time.Second,
-		WriteTimeout: 10 * time.Second,
-	}
+func (h *Server) Greet(ctx context.Context, req *pb.GreetingRequest) (*pb.GreetingResponse, error) {
+	return &pb.GreetingResponse{
+		Greeting: fmt.Sprintf("Hello %s", req.GetName()),
+	}, nil
 }

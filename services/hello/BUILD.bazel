@@ -8,8 +8,10 @@ go_library(
     importpath = "github.com/nikunjy/go/services/hello",
     visibility = ["//visibility:private"],
     deps = [
+        "//protos/hello:go_default_library",
         "//services/hello/server:go_default_library",
         "@com_github_jessevdk_go_flags//:go_default_library",
+        "@org_golang_google_grpc//:go_default_library",
     ],
 )
 

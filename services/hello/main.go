@@ -1,18 +1,18 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"log"
-	"net/http"
+	"net"
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
+
+	pb "github.com/nikunjy/go/protos/hello"
+	"github.com/nikunjy/go/services/hello/server"
 
 	"github.com/jessevdk/go-flags"
-
-	"github.com/nikunjy/go/services/hello/server"
+	"google.golang.org/grpc"
 )
 
 type Options struct {
@@ -26,31 +26,34 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	srv := server.New(opts.ServerPort)
-	httpServer := srv.HttpServer()
+	srv := &server.Server{}
+	server := grpc.NewServer()
+
+	pb.RegisterHelloServer(server, srv)
+	listener, err := net.Listen("tcp", fmt.Sprintf(":%d", opts.ServerPort))
+	if err != nil {
+		log.Fatal(err)
+	}
 	// Start Server
 	go func() {
 		log.Println("Setting proxy server port", opts.ServerPort)
-		if err := httpServer.ListenAndServe(); err != nil {
+		if err := server.Serve(listener); err != nil {
 			log.Fatal(err)
 		}
 	}()
 
 	// Graceful Shutdown
-	waitForShutdown(httpServer)
+	waitForShutdown(server)
 }
 
-func waitForShutdown(srv *http.Server) {
+func waitForShutdown(server *grpc.Server) {
 	interruptChan := make(chan os.Signal, 1)
 	signal.Notify(interruptChan, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 
 	// Block until we receive our signal.
 	<-interruptChan
 
-	// Create a deadline to wait for.
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
-	defer cancel()
-	srv.Shutdown(ctx)
+	server.GracefulStop()
 
 	log.Println("Shutting down")
 	os.Exit(0)

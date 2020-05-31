@@ -5,7 +5,7 @@ go_library(
     srcs = ["server.go"],
     importpath = "github.com/nikunjy/go/services/hello/server",
     visibility = ["//visibility:public"],
-    deps = ["@com_github_gorilla_mux//:go_default_library"],
+    deps = ["//protos/hello:go_default_library"],
 )
 
 go_test(
