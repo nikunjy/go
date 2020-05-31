@@ -49,3 +49,13 @@ load("//:go_third_party.bzl", "go_deps")
 # gazelle:repository_macro go_third_party.bzl%go_deps
 go_deps()
 
+http_archive(
+    name = "com_google_protobuf",
+    sha256 = "9748c0d90e54ea09e5e75fb7fac16edce15d2028d4356f32211cfa3c0e956564",
+    strip_prefix = "protobuf-3.11.4",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.11.4.zip"],
+)
+
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+
+protobuf_deps()
