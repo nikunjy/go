@@ -1,0 +1,14 @@
+syntax = "proto3";
+package hello;
+option go_package = "github.com/nikunjy/go/protos/hello";
+service Hello {
+ rpc Greet(GreetingRequest) returns (GreetingResponse);
+}
+
+message GreetingRequest {
+ string name = 1;
+};
+
+message GreetingResponse {
+ string greeting = 1;
+};
