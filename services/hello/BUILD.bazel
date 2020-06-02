@@ -34,3 +34,18 @@ container_image(
     stamp = True,
     visibility = ["//visibility:public"],
 )
+
+go_image(
+    name = "base_image_dev",
+    binary = "hello",
+    base = "@ubuntu16.04//image",
+    embed = [":go_default_library"],
+    visibility = ["//visibility:public"],
+)
+
+container_image(
+    name = "image_dev",
+    base = ":base_image_dev",
+    stamp = True,
+    visibility = ["//visibility:public"],
+)

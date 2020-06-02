@@ -16,7 +16,7 @@ import (
 )
 
 type Options struct {
-	ServerPort int `long:"proxy-port" descriptiont:"port which proxy listens on"`
+	ServerPort int `long:"proxy-port" descriptiont:"port which proxy listens on" default:"24689"`
 }
 
 func main() {
