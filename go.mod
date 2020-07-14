@@ -3,6 +3,7 @@ module github.com/nikunjy/go
 go 1.14
 
 require (
+	github.com/bazelbuild/bazel-gazelle v0.21.1
 	github.com/golang/protobuf v1.4.2
 	github.com/gorilla/mux v1.7.3
 	github.com/hashicorp/golang-lru v0.5.3
