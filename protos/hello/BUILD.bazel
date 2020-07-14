@@ -23,9 +23,3 @@ go_library(
     importpath = "github.com/nikunjy/go/protos/hello",
     visibility = ["//visibility:public"],
 )
-
-go_proto_link(
-    name = "hello_go_proto_link",
-    dep = ":hello_go_proto",
-    version = "v1",
-)
