@@ -1,3 +1,4 @@
+load("@golink//proto:proto.bzl", "go_proto_link")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
@@ -21,4 +22,10 @@ go_library(
     embed = [":hello_go_proto"],
     importpath = "github.com/nikunjy/go/protos/hello",
     visibility = ["//visibility:public"],
+)
+
+go_proto_link(
+    name = "hello_go_proto_link",
+    dep = ":hello_go_proto",
+    version = "v1",
 )
