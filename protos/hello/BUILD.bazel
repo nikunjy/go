@@ -5,7 +5,10 @@ load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 
 proto_library(
     name = "hello_proto",
-    srcs = ["hello.proto"],
+    srcs = [
+        "hello.proto",
+        "hello_service.proto",
+    ],
     visibility = ["//visibility:public"],
 )
 
