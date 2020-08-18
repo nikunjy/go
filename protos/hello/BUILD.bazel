@@ -10,6 +10,7 @@ proto_library(
         "hello_service.proto",
     ],
     visibility = ["//visibility:public"],
+    deps = ["//protos/common:common_proto"],
 )
 
 go_proto_library(
@@ -18,6 +19,7 @@ go_proto_library(
     importpath = "github.com/nikunjy/go/protos/hello",
     proto = ":hello_proto",
     visibility = ["//visibility:public"],
+    deps = ["//protos/common:go_default_library"],
 )
 
 go_library(

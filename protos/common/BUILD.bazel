@@ -1,0 +1,30 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@golink//proto:proto.bzl", "go_proto_link")
+
+proto_library(
+    name = "common_proto",
+    srcs = ["common.proto"],
+    visibility = ["//visibility:public"],
+)
+
+go_proto_library(
+    name = "common_go_proto",
+    importpath = "github.com/nikunjy/go/protos/common",
+    proto = ":common_proto",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "go_default_library",
+    embed = [":common_go_proto"],
+    importpath = "github.com/nikunjy/go/protos/common",
+    visibility = ["//visibility:public"],
+)
+
+go_proto_link(
+    name = "common_go_proto_link",
+    dep = ":common_go_proto",
+    version = "v1",
+)
