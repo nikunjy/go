@@ -17,12 +17,12 @@ docker_repos()
 load("//bazel/docker:def.bzl", "docker_deps")
 docker_deps()
 
-git_repository(
+http_archive(
     name = "golink",
-    commit = "v1.0.0",
-    remote = "https://github.com/nikunjy/golink",
+    urls = ["https://github.com/nikunjy/golink/archive/v1.1.0.tar.gz"],
+    sha256 = "c505a82b7180d4315bbaf05848e9b7d2683e80f1b16159af51a0ecae6fb2d54d",
+    strip_prefix = "golink-1.1.0"
 )
-
 
 
 load("//:go_third_party.bzl", "go_deps")
